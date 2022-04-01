@@ -1,23 +1,24 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
 import { ApiContext } from '../../utils/api_context';
 import { AuthContext } from '../../utils/auth_context';
-import { RolesContext } from '../../utils/roles_context';
 import { Button } from '../common/button';
-import { Ping } from './ping';
 
 export const Home = () => {
   const [, setAuthToken] = useContext(AuthContext);
   const api = useContext(ApiContext);
-  const roles = useContext(RolesContext);
-
-  const navigate = useNavigate();
-
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [chatRooms, setChatRooms] = useState([]);
+
   useEffect(async () => {
+    setLoading(true);
+
     const res = await api.get('/users/me');
     setUser(res.user);
+
+    const { chatRooms } = await api.get('chat_rooms')
+    setChatRooms(chatRooms);
+
     setLoading(false);
   }, []);
 
@@ -28,24 +29,20 @@ export const Home = () => {
     }
   };
 
+  const createRoom = async () => {
+    const { chatRoom } = await api.post('/chatrooms', { roomId } ); //figure out room ids
+    setChatRooms([...chatRooms, chatRoom])
+  }
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading, please wait</div>;
   }
 
   return (
-    <div className="p-4">
-      <h1>Welcome {user.firstName}</h1>
+    <div>
       <Button type="button" onClick={logout}>
         Logout
       </Button>
-      {roles.includes('admin') && (
-        <Button type="button" onClick={() => navigate('/admin')}>
-          Admin
-        </Button>
-      )}
-      <section>
-        <Ping />
-      </section>
     </div>
   );
 };
