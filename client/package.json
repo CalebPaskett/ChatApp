@@ -15,6 +15,7 @@
     "tailwindcss": "^2.2.19"
   },
   "dependencies": {
+    "mapbox-gl": "^2.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "6",
