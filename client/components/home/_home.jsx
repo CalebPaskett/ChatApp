@@ -3,6 +3,8 @@ import { ApiContext } from '../../utils/api_context';
 import { AuthContext } from '../../utils/auth_context';
 import { Button } from '../common/button';
 import mapboxgl from 'mapbox-gl';
+import { ChatRoom } from '../chat_room/chat_room';
+import { Link, Route, Routes } from 'react-router-dom';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FsZWJ1c3UiLCJhIjoiY2wxZnFndWFjMHhwcTNkcWk4dmhjMDRkaSJ9._0_p5G6jsbTMmbD96x5DWA';
 
@@ -21,7 +23,7 @@ export const Home = () => {
     const res = await api.get('/users/me');
     setUser(res.user);
 
-    const { chatRooms } = await api.get('chat_rooms')
+    const { chatRooms } = await api.get('/chat_rooms');
     setChatRooms(chatRooms);
 
     navigator.geolocation.getCurrentPosition((location) => { //will request permission here
@@ -50,8 +52,8 @@ export const Home = () => {
   const createRoom = async () => {
     let long = curLocation.coords.longitude;
     let lat = curLocation.coords.latitude;
-    const { chatRoom } = await api.post('/chatrooms', { lat, long } );
-    setChatRooms([...chatRooms, chatRoom])
+    const { chatRoom } = await api.post('/chat_rooms', { lat, long });
+    setChatRooms([...chatRooms, chatRoom]);
   }
 
   if (loading) {
@@ -73,7 +75,10 @@ export const Home = () => {
             { errorMessage && 'You need to enable GPS' }
           </div>
           <div>
-            chat room window here
+            <Routes>
+              <Route path="chat_rooms/:id" element={<ChatRoom/>} />
+              <Route path="/*" element={<div>Pick or create a room</div>} />
+            </Routes>
           </div>
         </div>
         <div id="map"/>

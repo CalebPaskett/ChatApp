@@ -12,7 +12,7 @@ export const Router = () => {
   return (
     <Routes>
       <Route
-        path="/"
+        path="/*"
         element={authToken ? <Home /> : <Navigate replace to="signin" />} // no token means not logged in
       />
       <Route path="admin" element={<Admin />} />

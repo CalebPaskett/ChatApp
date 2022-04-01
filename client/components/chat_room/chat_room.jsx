@@ -3,7 +3,7 @@ import { useMessages } from '../../utils/use_messages';
 import { ApiContext } from '../../utils/api_context';
 import { Button } from '../common/button';
 
-export const chat_room = () => {
+export const ChatRoom = () => {
   const [chatRoom, setChatRoom] = useState(null);
   const [messages, sendMessage] = useMessages(chatRoom);
   const [content, setContent] = useState('');

@@ -10,17 +10,17 @@ class ChatRoomBody {
 
 @Controller()
 export class ChatRoomsController {
-  constructor(private chatRoomsService: ChatRoomService) {}
+  constructor(private chatRoomService: ChatRoomService) {}
 
   @Get('/chat_rooms')
   async index() {
-    const chatRooms = await this.chatRoomsService.findAll();
+    const chatRooms = await this.chatRoomService.findAll();
     return { chatRooms };
   }
 
   @Get('/chat_rooms/:id')
   async show(@Param('id') id: string) {
-    const chatRoom = await this.chatRoomsService.findOne(parseInt(id));
+    const chatRoom = await this.chatRoomService.findOne(parseInt(id));
     return { chatRoom };
   }
 
@@ -30,7 +30,7 @@ export class ChatRoomsController {
     chatRoom.lat = body.lat;
     chatRoom.long = body.long;
     chatRoom.roomkey = crypto.randomBytes(8).toString('hex');
-    chatRoom = await this.chatRoomsService.create(chatRoom);
+    chatRoom = await this.chatRoomService.create(chatRoom);
     return { chatRoom };
   }
 }

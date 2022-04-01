@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useRef } from 'react';
-import { AuthContext } from '../../utils/auth_context';
 import { io } from 'socket.io-client';
+import { AuthContext } from './auth_context';
 
 export const useMessages = (chatRoom) => {
 	//useStates here

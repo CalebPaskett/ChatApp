@@ -20,7 +20,7 @@ export class AddRooms1648773975582 implements MigrationInterface {
                 {
                     name: 'long',
                     type: 'double precision',
-                  },
+                },
                 {
                   name: 'roomkey',
                   type: 'text',
