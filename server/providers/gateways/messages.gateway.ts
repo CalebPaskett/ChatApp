@@ -2,6 +2,7 @@ import { UseGuards } from "@nestjs/common";
 import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer, WsException } from "@nestjs/websockets";
 import { GatewayAuthGuard } from "../guards/gatewayauth.guard";
 import { Server, Socket } from 'socket.io';
+import { JwtService } from '../services/jwt.service';
 
 class ChatMessagePayload {
 	contents: string;
@@ -20,7 +21,7 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
 	@WebSocketServer()
 	server: Server;
 
-	constructor(private jwtService) {}
+	constructor(private jwtService: JwtService) {}
 	
 	handleConnection(client: any, ...args: any[]) {
     try {
