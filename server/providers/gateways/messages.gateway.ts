@@ -1,8 +1,10 @@
 import { UseGuards } from "@nestjs/common";
-import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer, WsException } from "@nestjs/websockets";
+import { ConnectedSocket, OnGatewayConnection,   MessageBody, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer, WsException } from "@nestjs/websockets";
 import { GatewayAuthGuard } from "../guards/gatewayauth.guard";
 import { Server, Socket } from 'socket.io';
 import { JwtService } from '../services/jwt.service';
+import { GatewayJwtBody } from 'server/decorators/gateway_jwt_body.decorator';
+import { JwtBodyDto } from 'server/dto/jwt_body.dto';
 
 class ChatMessagePayload {
 	contents: string;
@@ -40,12 +42,14 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
 	}
 	
 	@SubscribeMessage('message') //takes type of message we want to subscribe to, calls this whenever that type is received
-	async handleMessage(client: Socket, payload: ChatMessagePayload) {
+	async handleMessage( @ConnectedSocket() client: Socket, @MessageBody() payload: ChatMessagePayload, @GatewayJwtBody() jwtBody: JwtBodyDto,) {
+		console.log("New message seen")
     let newChatMessage = new chatMessage();
 		newChatMessage.contents = payload.contents;
 		newChatMessage.userName = payload.userName;
 		newChatMessage.roomid = parseInt(client.handshake.query.chatRoomId as unknown as string, 10);
-		
-		this.server.to('${messsage.newChatMessageRoom}').emit('message', newChatMessage); //notify anyone connected to chatroom
+
+		console.log("Message sent to others")
+		this.server.to(`${newChatMessage.roomid}`).emit('message', newChatMessage); //notify anyone connected to chatroom
 	}
 }

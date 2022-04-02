@@ -17,8 +17,11 @@ export const useMessages = (chatRoom) => {
       })
       
       setSocket(socket);
+      setMessages([]);
+      messagesRef.current = [];
 
       socket.on('message', (message) => {
+        console.log("New message recieved")
         messagesRef.current.push(message); //Adds new message to messagesRef
         setMessages([...messagesRef.current]);
       });
@@ -32,10 +35,12 @@ export const useMessages = (chatRoom) => {
   },[chatRoom]); //runs when chatroom changes
 	
 	const sendMessage = (contents, user) => {
+    console.log("Sending message...")
 		socket.emit('message', {
 			contents,
-			userName: '${user.firstName} ${user.lastName}',
+			userName: (user.firstName + " " + user.lastName),
 		});
+    console.log("Sent message")
 		//send: message type, object that represents message type
 	}
 	

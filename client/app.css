@@ -11,9 +11,76 @@
 	right: 0;
   height: 56px;
 	padding: 8px;
-  background: gray;
+  background: #6e6e6e;
   display: flex;
   flex-direction: row;
+}
+
+.chat-bar {
+  position: fixed;
+	bottom: 0;
+	left: 0;
+  height: 56px;
+  width: 50%;
+	padding: 8px;
+  background: #6e6e6e;
+  display: flex;
+  flex-direction: row;
+}
+
+.chat-container {
+  flex: 1;
+}
+
+.chatroom-window {
+  display: flex;
+	flex-direction: column;
+  flex: 1;
+}
+
+.chat-window {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column-reverse;
+  position: fixed;
+  width: 50%;
+  bottom: 56px;
+  top: 56px;
+}
+
+.chat-author {
+  font-weight: 600;
+}
+
+.chat-message {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid black;
+  overflow-x: auto;
+  display: inline-block;
+}
+
+.button {
+  background: #3c3c3c;
+  font-weight: 700;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  border-radius: 0.5rem;
+  color: white;
+}
+
+.message-input {
+  flex: 1;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .log-out {
@@ -30,12 +97,21 @@
   width: 100%;
 }
 
-.chat-window {
-  width: 100%;
-  height: 100%;
+.system {
+  font-weight: 700;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.25rem;
+  margin-top: 0.25rem;
+  border-radius: 8px;
+  border: 1px solid black;
 }
 
 #map {
-  width: 100%;
+  flex: 1;
   height: 100%;
 }
